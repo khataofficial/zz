@@ -1,4 +1,4 @@
-const CACHE = "khata-v49";
+const CACHE = "khata-v50";
 const LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js";
 const FILES = ["./", "./index.html", "./script.js", "./shop.html", "./theme.js", "./shop-ui.css", "./yt.css", "./khicons.js", "./owner.html", "./community.html", "./cloud.js", /* ADS-DISABLED "./adsense.js", */ "./config.js", "./manifest.json", "./icon.svg", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 const FONT = /^https:\/\/fonts\.(googleapis|gstatic)\.com\//;
