@@ -1,0 +1,17 @@
+/* Shop look (clean cards, soft borders, black & white like My Khata). Used by Store, Community, Owner, Admin. */
+:root{--bad:#dc2626;--ok:#16a34a}
+html,body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif!important;-webkit-font-smoothing:antialiased}
+body{background:var(--bg)!important;color:var(--ink);font-size:14px}
+*{transition:background-color .15s,border-color .15s,color .15s,box-shadow .15s}
+.ic{display:inline-flex;vertical-align:-.22em;flex-shrink:0}
+.ic svg{width:1.15em;height:1.15em;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+button{font-family:inherit;-webkit-tap-highlight-color:transparent;cursor:pointer}button:active{transform:scale(.97)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input,textarea,select{font:inherit;font-size:15px;border:1px solid var(--line)!important;border-radius:12px!important;background:var(--card)!important;color:var(--ink)!important}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent)}
+label{font-size:12px;font-weight:700;color:var(--soft)}
+.card,.p,.sc,.panel,.stat,.oc,.pr{background:var(--card)!important;border:1px solid var(--line)!important;border-radius:18px!important}
+.btn,.add,.pri,.kt-x{background:var(--accent)!important;color:var(--on)!important;border:0!important;border-radius:14px!important;font-weight:700}
+.btn.alt{background:var(--chip)!important;color:var(--ink)!important}
+.toast{background:var(--ink)!important;color:var(--bg)!important;border-radius:99px!important}
+.empty{color:var(--soft)}

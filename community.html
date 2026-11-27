@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>My Khata – Community</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Community has its OWN theme (kc-mode / kc-accent). It never touches My Khata's theme. */
+:root{--accent:#111;--on:#fff;--bg:#fff;--card:#fff;--card2:#f4f4f5;--input:#fafafa;--ink:#111;--soft:#666;--line:#e4e4e7;--hov:#ececee;--out:#ececee;--red:#111;--green:#111;--shadow:0 1px 3px rgba(0,0,0,.06)}
+html[data-mode=dark]{--accent:#fff;--on:#111;--bg:#0d0d0f;--card:#161618;--card2:#1e1e21;--input:#0d0d0f;--ink:#fff;--soft:#a1a1aa;--line:#2e2e33;--hov:#2a2a2e;--out:#2a2a2e;--red:#fff;--green:#fff;--shadow:0 3px 12px rgba(0,0,0,.4);color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;padding:0;background:var(--bg)}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased}
+body.noscroll{overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg{display:block}
+.ic{display:inline-flex;vertical-align:-.2em}
+.ic svg,.i svg{width:1.15em;height:1.15em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.i{display:inline-flex}
+
+.app{max-width:780px;margin:0 auto;padding:22px 16px 40px}
+
+.stick{position:sticky;top:0;z-index:30;background:var(--bg);margin:-22px -16px 0;padding:22px 16px 12px}
+/* ---------- header: same as My Khata ---------- */
+header.top{display:flex;align-items:center;justify-content:space-between;padding:4px 0 8px}
+.top-l{display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none;color:inherit}
+.hdr-av{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:var(--card2);object-fit:cover;display:block}
+.name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+header.top h1{margin:0;font-size:22px;font-weight:800;letter-spacing:.3px;color:var(--ink)}
+.plan-badge{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:6px 12px;font:800 12px/1 Inter,sans-serif;background:#38bdf8;color:#04283d}
+.sub{font-size:12px;color:var(--soft);margin-top:2px}
+.icons{display:flex;gap:8px}
+.icon-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:12px;color:var(--ink);transition:background .15s}
+.icon-btn:hover{background:var(--hov)}.icon-btn:active{transform:scale(.92)}
+.icon-btn .ic svg{width:20px;height:20px}
+
+/* ---------- tabs: same as My Khata ---------- */
+.tabs{display:flex;gap:4px;margin:6px 0 0;background:var(--card2);padding:4px;border-radius:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{flex:1 0 auto;padding:9px 6px;border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;min-width:70px}
+.tab-btn:hover{background:var(--hov)}
+.tab-btn.active,.tab-btn.active:hover{background:var(--accent);color:var(--on);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+
+/* ---------- search (same look as My Khata) ---------- */
+.search-wrap{position:relative;margin-bottom:14px}
+.search-wrap input{width:100%;padding:12px 42px 12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--input);color:var(--ink);box-shadow:var(--shadow)}
+.search-wrap input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.search-wrap .search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--soft);pointer-events:none}
+.empty{text-align:center;padding:40px 20px;color:var(--soft);font-size:14px;line-height:1.5}
+
+/* ---------- avatars ---------- */
+.av{width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--on);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;flex-shrink:0;overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.av.sm{width:34px;height:34px;font-size:14px}
+.av.sq{border-radius:14px}
+.av.lg{width:64px;height:64px;font-size:26px}
+
+/* ---------- chat list ---------- */
+.li{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border-radius:12px}
+.li:hover{background:var(--hov)}
+.li .tx{flex:1;min-width:0}
+.li .l1{display:flex;align-items:baseline;gap:8px}
+.li .nm{flex:1;min-width:0;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li .tm{font-size:11.5px;color:var(--soft)}
+.li .l2{font-size:13px;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+
+/* ---------- message bubbles (posts + chat) ---------- */
+.msgs{display:flex;flex-direction:column;gap:6px;padding-bottom:4px}
+.day{align-self:center;background:var(--card2);color:var(--soft);font-size:12px;padding:4px 12px;border-radius:99px;margin:8px 0}
+.msg{display:flex;gap:8px;align-items:flex-end;border-radius:12px;position:relative}
+.msg.me{flex-direction:row-reverse}
+.msg.sel{background:color-mix(in srgb,var(--accent) 18%,transparent);box-shadow:-100vw 0 0 color-mix(in srgb,var(--accent) 18%,transparent),100vw 0 0 color-mix(in srgb,var(--accent) 18%,transparent)}
+.bub{max-width:min(82%,520px);padding:8px 11px 6px;border-radius:14px;border-bottom-left-radius:4px;background:var(--card2);font-size:14.5px;line-height:1.4;overflow-wrap:anywhere;cursor:pointer;user-select:none}
+html[data-mode=dark] .bub{background:#243244}
+.me .bub{background:var(--out);border-bottom-left-radius:14px;border-bottom-right-radius:4px}
+html[data-mode=dark] .me .bub{background:#2a2a2e}
+.bub .sn{font-weight:700;font-size:12.5px;margin-bottom:2px;color:var(--accent)}
+.bub .t{white-space:pre-wrap}
+.bub .foot{display:flex;align-items:center;justify-content:flex-end;gap:2px;margin-top:3px;margin-right:-4px;color:var(--soft);font-size:11px}
+.bub .foot time{margin-right:4px}
+.bub .foot button{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--soft)}
+.bub .foot button:hover{background:var(--hov);color:var(--ink)}
+.bub .foot button.on{color:var(--accent)}
+.bub .foot button.on svg{fill:currentColor}
+.bub .foot .ic svg{width:15px;height:15px}
+
+/* ---------- compose bar (like WhatsApp) ---------- */
+.compose-spacer{height:74px}
+.compose{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);padding:8px 12px calc(8px + env(safe-area-inset-bottom,0))}
+.compose form{max-width:780px;margin:0 auto;display:flex;gap:8px;align-items:center}
+.compose input{flex:1;min-width:0;border:1px solid var(--line);background:var(--input);border-radius:24px;padding:12px 18px;font-size:15px;outline:none}
+.compose input:focus{border-color:var(--accent)}
+.send{width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--on);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .12s,opacity .15s}
+.send .ic svg{width:21px;height:21px}
+.send:active{transform:scale(.92)}
+.send:disabled{opacity:.45;cursor:default}
+
+/* ---------- selection bar (replaces header when messages are selected) ---------- */
+.selbar{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--accent);color:var(--on);padding-top:env(safe-area-inset-top,0)}
+.selbar .in{max-width:780px;margin:0 auto;height:78px;display:flex;align-items:center;gap:4px;padding:0 10px}
+.selbar b{flex:1;font-size:17px;margin-left:6px}
+.selbar button{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--on)}
+.selbar button:hover{background:rgba(255,255,255,.18)}
+.selbar .ic svg{width:21px;height:21px}
+
+/* ---------- stores ---------- */
+.stores{display:flex;flex-direction:column;gap:14px}
+.store-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+.store-head{display:flex;align-items:center;gap:12px}
+.store-name{font-size:16.5px;font-weight:800}
+.store-meta{font-size:12.5px;color:var(--soft);margin-top:2px}
+.prods{list-style:none;margin:12px 0 0;padding:0;border-top:1px dashed var(--line)}
+.prods li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.prods li:last-child{border-bottom:0}
+.prods .pi{width:30px;height:30px;border-radius:8px;background:color-mix(in srgb,var(--accent) 14%,var(--bg));color:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prods .pi .ic svg{width:16px;height:16px}
+.prods .pn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prods .pp{font-weight:700;white-space:nowrap}
+.store-acts{display:flex;gap:10px;margin-top:12px}
+.store-acts button{flex:1;padding:11px;border-radius:10px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-pri{background:var(--accent);color:var(--on)}
+.btn-soft{background:var(--card2);color:var(--ink)}
+html[data-mode=dark] .btn-soft{background:var(--hov)}
+.btn-soft:hover{background:var(--hov)}
+
+/* ---------- saved ---------- */
+.saved-item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.saved-item .h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.saved-item .h b{flex:1;font-size:14px}
+.saved-item .h small{color:var(--soft);font-size:11.5px}
+.saved-item p{margin:0 0 6px;font-size:14.5px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+.saved-item .acts{display:flex;gap:2px;justify-content:flex-end;margin-right:-6px}
+.saved-item .acts button{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--soft)}
+.saved-item .acts button:hover{background:var(--hov);color:var(--ink)}
+.chip-src{font-size:11px;font-weight:700;background:color-mix(in srgb,var(--accent) 14%,var(--bg));color:var(--accent);border-radius:99px;padding:2px 9px}
+
+/* ---------- chat screen (full overlay) ---------- */
+.chat-ov{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column}
+.chat-top{border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0)}
+.chat-top .in{max-width:780px;margin:0 auto;height:60px;display:flex;align-items:center;gap:8px;padding:0 10px}
+.chat-top .ct{flex:1;min-width:0;line-height:1.25}
+.chat-top .ct b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-top .ct small{color:var(--soft);font-size:12px}
+.chat-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.chat-body .msgs{max-width:780px;margin:0 auto;padding:12px 16px}
+.chat-ov .compose{position:static}
+
+/* ---------- settings page (same look as My Khata settings) ---------- */
+.ov{position:fixed;inset:0;background:var(--bg);z-index:90;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.ov.on{display:block}
+.sheet{background:transparent;color:var(--ink);width:100%;max-width:820px;margin:0 auto;padding:22px 16px calc(40px + env(safe-area-inset-bottom,0))}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--accent);padding:6px 0;margin-bottom:6px}
+.set-h{display:flex;align-items:center;gap:10px;margin:4px 0 14px;font-size:22px;font-weight:800}
+.set-crumb{font-size:11px;color:var(--soft);margin:-8px 0 14px}
+.set-prof{display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;background:var(--card2);margin-bottom:6px;cursor:pointer;width:100%;text-align:left}
+.set-pn{font-weight:800;font-size:16px}.set-ps{font-size:12px;color:var(--soft);margin-top:2px}
+.set-sec{font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--soft);margin:18px 4px 8px}
+.set-list{display:flex;flex-direction:column;gap:8px}
+.set-row{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;background:var(--card2);width:100%;text-align:left}
+.set-row:hover{background:var(--hov)}
+.set-ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--card);color:var(--accent);flex-shrink:0}
+.set-tx{flex:1;min-width:0}.set-t{font-weight:700;font-size:14px}.set-d{font-size:12px;color:var(--soft);margin-top:2px}
+.set-val{font-size:12px;color:var(--soft);font-weight:700}
+.set-blk{padding:13px 14px;border-radius:12px;background:var(--card2)}
+.set-blk .set-t{margin-bottom:10px}
+.prof{display:flex;align-items:center;gap:12px}
+.prof .fields{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.sheet input[type=text],.sheet input[type=url]{width:100%;border:1px solid var(--line);background:var(--input);color:var(--ink);border-radius:10px;padding:10px 12px;font-size:14px;outline:none}
+.sheet input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;padding:10px 6px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button.on{background:var(--accent);color:var(--on);border-color:var(--accent)}
+.blk{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.blk:last-child{border-bottom:0}
+.blk b{flex:1;font-size:14px}
+.blk button{padding:7px 13px;border-radius:9px;background:var(--card2);font-weight:700;font-size:13px}
+.blk button:hover{background:var(--hov)}
+.note{font-size:12.5px;color:var(--soft);line-height:1.5;margin:0}
+.save-row{margin-top:12px}
+.save-row button{width:100%;padding:11px;border-radius:10px;background:var(--accent);color:var(--on);font-weight:700}
+
+.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:600;font-size:13.5px;z-index:200;max-width:90vw;display:flex;gap:12px;align-items:center}
+.toast button{font-weight:800;color:var(--accent);padding:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="stick"><header class="top">
+    <a class="top-l" href="index.html" aria-label="Back to My Khata">
+      <img class="hdr-av" id="logo" alt="">
+      <div>
+        <div class="name-row"><h1>My Khata</h1><span class="plan-badge">Free</span></div>
+        <div class="sub">Customer credit ledger, stock &amp; finance</div>
+      </div>
+    </a>
+    <div class="icons"><button class="icon-btn" id="setBtn" type="button" aria-label="Community settings"></button></div>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Community"></nav></div>
+  <main id="main"></main>
+</div>
+
+<div class="selbar" id="selbar" hidden></div>
+<div class="compose" id="postCompose" hidden>
+  <form id="postForm" autocomplete="off"><input id="postIn" type="text" maxlength="1000" placeholder="Write a post" aria-label="Write a post"><button class="send" id="postSend" type="submit" aria-label="Send" disabled></button></form>
+</div>
+
+<section class="chat-ov" id="chat" hidden>
+  <div class="chat-top"><div class="in">
+    <button class="icon-btn" id="chatBack" type="button" aria-label="Back"></button>
+    <div class="av sm" id="chatAv"></div>
+    <div class="ct"><b id="chatName"></b><small id="chatSub"></small></div>
+  </div></div>
+  <div class="chat-body" id="chatBody"><div class="msgs" id="chatMsgs"></div></div>
+  <div class="compose"><form id="chatForm" autocomplete="off"><input id="chatIn" type="text" maxlength="1000" placeholder="Type a message" aria-label="Type a message"><button class="send" id="chatSend" type="submit" aria-label="Send" disabled></button></form></div>
+</section>
+
+<div class="ov" id="ov"><div class="sheet" id="sheet" role="dialog" aria-label="Community settings"></div></div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i);};
+var ICONS={"settings":"<path d=\"M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>","copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/>","trash-2":"<path d=\"M3 6h18\"/><path d=\"M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6\"/><path d=\"M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2\"/><line x1=\"10\" x2=\"10\" y1=\"11\" y2=\"17\"/><line x1=\"14\" x2=\"14\" y1=\"11\" y2=\"17\"/>","search":"<circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","ban":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m4.9 4.9 14.2 14.2\"/>","store":"<path d=\"M3 9l1.5-5h15L21 9\"/><path d=\"M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0\"/><path d=\"M5 12v8h14v-8\"/><path d=\"M10 20v-5h4v5\"/>","message-circle":"<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\"/>","arrow-left":"<path d=\"m12 19-7-7 7-7\"/><path d=\"M19 12H5\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","crown":"<path d=\"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z\"/><path d=\"M5 21h14\"/>","user":"<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\"/>","link":"<path d=\"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\"/><path d=\"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\"/>","image":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" ry=\"2\"/><circle cx=\"9\" cy=\"9\" r=\"2\"/><path d=\"m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\"/>","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/>","pencil":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","package":"<path d=\"m7.5 4.27 9 5.15\"/><path d=\"M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z\"/><path d=\"m3.3 7 8.7 5 8.7-5\"/><path d=\"M12 22V12\"/>"};
+ICONS.send='<path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/>';
+ICONS.bookmark='<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>';
+ICONS['chat']=ICONS['message-circle'];
+function ic(n,s){return '<span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"'+(s?' style="width:'+s+'px;height:'+s+'px"':'')+'>'+(ICONS[n]||'')+'</svg></span>';}
+var esc=function(t){var d=document.createElement('div');d.textContent=String(t==null?'':t);return d.innerHTML;};
+
+/* ---------- own storage (separate from My Khata) ---------- */
+function ls(k,v){try{if(v===undefined){var x=localStorage.getItem(k);return x==null?'':x;}localStorage.setItem(k,v);}catch(e){return '';}}
+function jget(k,d){try{var x=JSON.parse(ls(k));return x==null?d:x;}catch(e){return d;}}
+var S={
+  mode:ls('kc-mode')||'light',accent:ls('kc-accent')||'#4aa8e8',
+  me:jget('kc-me',{name:'You',dp:''}),
+  blocked:jget('kc-blocked',[]),saved:jget('kc-saved',{})
+};
+function persist(){ls('kc-mode',S.mode);ls('kc-accent',S.accent);ls('kc-me',JSON.stringify(S.me));ls('kc-blocked',JSON.stringify(S.blocked));ls('kc-saved',JSON.stringify(S.saved));}
+
+/* ---------- theme ---------- */
+function lum(h){var n=parseInt(h.slice(1),16);return(.299*(n>>16&255)+.587*(n>>8&255)+.114*(n&255))/255;}
+function applyTheme(){
+  var dark=S.mode==='dark'||(S.mode==='auto'&&matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches);
+  var a=dark?'#ffffff':'#111111',on=dark?'#111111':'#ffffff';
+  var r=document.documentElement;r.setAttribute('data-mode',dark?'dark':'light');
+  r.style.setProperty('--accent',a);r.style.setProperty('--on',on);
+  var m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0d0d0f':'#ffffff';
+  $('logo').src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="'+a+'"/><path fill="'+on+'" fill-rule="evenodd" transform="translate(256 256) scale(.78) translate(-256 -256)" d="M319.5 349.5L315.8 345.3L314.0 344.3L307.4 343.9L267.4 356.1L223.2 370.7L218.5 374.9L217.1 377.8L216.2 381.1L216.2 383.9L217.1 387.2L218.5 389.5L222.7 392.8L226.4 393.8L229.7 393.3L274.9 377.3L312.1 366.5L315.4 364.6L319.5 359.4L320.5 356.6L320.5 352.3ZM346.6 305.7L344.2 301.0L341.0 298.2L338.2 297.2L333.5 297.2L284.2 312.8L270.2 316.5L219.9 332.5L215.3 336.8L213.4 340.6L212.9 342.9L213.4 347.1L214.8 350.4L219.0 354.2L221.3 355.2L226.9 355.2L264.6 342.4L339.6 319.8L342.4 317.9L344.7 315.1L346.6 310.4ZM344.7 266.6L342.4 262.4L339.6 260.0L337.2 259.1L333.1 258.6L234.4 288.3L219.9 293.0L215.3 295.8L212.5 299.6L211.1 304.8L211.5 309.0L212.9 311.8L216.2 315.1L219.9 316.5L225.0 316.5L264.1 303.8L324.7 285.4L335.8 282.6L339.6 280.7L343.3 276.5L345.2 270.8ZM103.5 158.7L99.3 168.1L97.5 178.0L97.9 318.9L98.9 327.4L101.7 336.3L105.4 343.4L107.7 346.7L114.7 353.7L145.9 374.0L173.4 390.5L197.1 405.6L199.0 405.6L201.3 404.1L201.8 403.2L201.8 366.5L200.4 360.8L198.0 356.1L192.0 349.5L175.7 338.7L162.2 330.7L157.5 325.5L154.7 318.4L155.2 221.4L157.5 215.7L160.3 212.4L165.0 209.6L168.7 208.7L173.8 209.1L179.9 212.0L213.9 231.7L239.0 245.4L253.0 254.4L260.0 257.6L264.1 257.6L295.8 244.5L314.4 235.5L335.4 227.0L354.0 218.1L361.0 217.6L365.2 219.5L368.9 222.8L371.7 228.4L371.7 339.6L370.3 343.9L368.0 348.1L361.5 354.7L352.6 359.4L268.8 397.1L231.1 416.4L230.2 417.3L230.2 419.2L236.7 423.9L243.2 426.8L249.2 427.7L254.4 427.2L260.9 424.9L314.0 400.8L341.9 389.1L391.2 366.0L397.3 361.8L403.4 355.6L407.1 350.4L411.3 342.0L413.1 335.8L414.1 329.7L414.5 175.7L413.6 172.4L411.3 168.1L406.6 163.9L399.6 161.6L395.9 161.6L389.4 163.4L364.7 174.7L329.3 192.6L316.8 197.8L286.5 212.4L164.5 144.1L150.1 137.1L145.4 136.1L136.6 136.1L125.9 138.9L120.3 141.8L114.2 146.0L107.3 153.1ZM395.0 122.9L391.2 119.2L386.6 117.3L378.2 117.7L364.2 124.8L344.7 133.3L334.9 138.5L313.0 147.9L279.5 163.9L275.3 165.3L256.2 174.7L254.8 176.6L256.2 178.0L261.4 180.4L287.0 195.0L289.3 195.0L315.8 182.3L339.6 171.9L362.8 160.1L389.4 148.4L393.1 145.1L396.8 137.5L397.3 128.6ZM350.3 94.2L345.6 88.5L342.4 86.7L339.6 85.7L333.5 85.7L330.7 86.7L301.9 101.7L217.1 143.2L208.3 147.9L207.3 148.8L207.3 150.2L239.0 167.7L241.3 167.2L323.7 126.7L324.7 125.8L344.2 116.8L348.9 111.6L351.2 105.5L351.7 99.4Z"/></svg>');
+}
+
+/* ---------- data (filled from real accounts) ---------- */
+var U={};
+var posts=[];
+var chats=[];
+var stores=[];
+var sub=''; // post cache for saved lookup
+var SRC={}; // saved items: id -> {id,name,t,at,src}
+
+/* ---------- helpers ---------- */
+var PAL=[];
+function hue(s){var h=0;s=String(s||'?');for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return PAL[h%PAL.length];}
+function nameOf(u){return u==='me'?(S.me.name||'You'):(U[u]||u);}
+function av(u,cls){
+  var n=nameOf(u),dp=u==='me'?S.me.dp:'',c='';
+  var ini=esc((Array.from(n.trim())[0]||'?').toUpperCase());
+  return '<div class="av '+(cls||'')+'" '+c+'>'+(dp?'<img src="'+esc(dp)+'" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+'</div>';
+}
+function hm(t){return new Date(t).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});}
+function same(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
+function dayLbl(t){var d=new Date(t),n=new Date();if(same(d,n))return 'Today';var y=new Date(n);y.setDate(n.getDate()-1);if(same(d,y))return 'Yesterday';return d.toLocaleDateString([],{day:'numeric',month:'short'});}
+function listTime(t){var d=new Date(t),n=new Date();if(same(d,n))return hm(t);var y=new Date(n);y.setDate(n.getDate()-1);if(same(d,y))return 'Yesterday';return d.toLocaleDateString([],{day:'numeric',month:'short'});}
+function toast(m,undo){var t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.innerHTML='<span>'+esc(m)+'</span>';
+  if(undo){var b=document.createElement('button');b.textContent='Undo';b.onclick=function(){undo();t.remove();};t.appendChild(b);}
+  document.body.appendChild(t);setTimeout(function(){t.remove();},undo?4500:2000);}
+function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){toast('Copied');},function(){toast('Could not copy');});else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('Copied');}catch(e){toast('Could not copy');}a.remove();}}
+function isBlocked(u){return S.blocked.indexOf(u)>=0;}
+function searchBox(id,ph,val){return '<div class="search-wrap"><input type="text" id="'+id+'" placeholder="'+ph+'" value="'+esc(val||'')+'" autocomplete="off" aria-label="'+ph+'"><span class="search-icon">'+ic('search',18)+'</span></div>';}
+
+/* ---------- messages (shared by posts + chat) ---------- */
+var sel={ctx:null,ids:{}};
+function selCount(){return Object.keys(sel.ids).length;}
+function clearSel(){sel={ctx:null,ids:{}};drawSel();redrawActive();}
+function bubbleHTML(m,showName,src){
+  var mine=m.u==='me',on=!!sel.ids[m.id],sv=!!S.saved[m.id];
+  return '<div class="msg'+(mine?' me':'')+(on?' sel':'')+'" data-id="'+m.id+'">'+(!mine&&showName?av(m.u,'sm'):'')+
+   '<div class="bub" role="button" tabindex="0" aria-pressed="'+on+'">'+(!mine&&showName?'<div class="sn" style="color:'+hue(nameOf(m.u))+'">'+esc(nameOf(m.u))+'</div>':'')+
+   '<div class="t">'+esc(m.t)+'</div><div class="foot"><time>'+hm(m.at)+'</time>'+
+   '<button type="button" data-a="copy" aria-label="Copy">'+ic('copy')+'</button>'+
+   '<button type="button" data-a="save" class="'+(sv?'on':'')+'" aria-label="'+(sv?'Unsave':'Save')+'">'+ic('bookmark')+'</button></div></div></div>';
+}
+function listHTML(list,showName){
+  if(!list.length)return '';
+  var h='',prev=null;
+  list.forEach(function(m){var d=new Date(m.at);if(!prev||!same(prev,d))h+='<div class="day">'+dayLbl(m.at)+'</div>';prev=d;h+=bubbleHTML(m,showName);});
+  return h;
+}
+function findMsg(id){
+  var i,L=posts.concat(chatMsgsAll());
+  for(i=0;i<L.length;i++)if(L[i].id===id)return L[i];return null;
+}
+function chatMsgsAll(){var a=[];chats.forEach(function(c){c.list.forEach(function(m){a.push(m);});});return a;}
+chats.forEach(function(c){c.list=c.msgs.map(function(x,i){return {id:c.id+'m'+i,u:x.m?'me':c.u,t:x.t,at:x.at};});});
+posts.forEach(function(p){p.u=p.u;});
+
+function bindMsgs(root,ctx){
+  root.onclick=function(e){
+    var row=e.target.closest('.msg');if(!row)return;
+    var id=row.getAttribute('data-id'),m=findMsg(id);if(!m)return;
+    var b=e.target.closest('button[data-a]');
+    if(b){
+      e.stopPropagation();
+      if(b.getAttribute('data-a')==='copy')copyText(m.t);
+      else toggleSave(m,ctx);
+      return;
+    }
+    if(sel.ctx&&sel.ctx!==ctx){sel={ctx:null,ids:{}};}
+    sel.ctx=ctx;
+    if(sel.ids[id])delete sel.ids[id];else sel.ids[id]=1;
+    if(!selCount())sel.ctx=null;
+    drawSel();row.classList.toggle('sel',!!sel.ids[id]);
+    var bub=row.querySelector('.bub');if(bub)bub.setAttribute('aria-pressed',String(!!sel.ids[id]));
+  };
+  root.onkeydown=function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('bub')){e.preventDefault();e.target.click();}};
+}
+function toggleSave(m,ctx){
+  if(S.saved[m.id]){delete S.saved[m.id];toast('Removed from Saved');}
+  else{S.saved[m.id]={id:m.id,u:m.u,name:nameOf(m.u),t:m.t,at:m.at,src:ctx==='post'?'Post':'Chat'};toast('Saved');}
+  persist();redrawActive();
+}
+function selMsgs(){return Object.keys(sel.ids).map(findMsg).filter(Boolean);}
+function drawSel(){
+  var n=selCount(),bar=$('selbar');
+  if(!n){bar.hidden=true;bar.innerHTML='';return;}
+  var L=selMsgs(),allMine=L.every(function(m){return m.u==='me';}),allOthers=L.every(function(m){return m.u!=='me';});
+  var ctx=sel.ctx;
+  bar.hidden=false;
+  bar.innerHTML='<div class="in"><button type="button" data-s="x" aria-label="Cancel">'+ic('x')+'</button><b>'+n+' selected</b>'+
+   '<button type="button" data-s="copy" aria-label="Copy">'+ic('copy')+'</button>'+
+   '<button type="button" data-s="save" aria-label="Save">'+ic('bookmark')+'</button>'+
+   (ctx==='post'&&allOthers?'<button type="button" data-s="block" aria-label="Block user">'+ic('ban')+'</button>':'')+
+   (allMine?'<button type="button" data-s="del" aria-label="Delete">'+ic('trash-2')+'</button>':'')+'</div>';
+}
+$('selbar').addEventListener('click',function(e){
+  var b=e.target.closest('[data-s]');if(!b)return;
+  var a=b.getAttribute('data-s'),L=selMsgs(),ctx=sel.ctx;
+  if(a==='x'){clearSel();return;}
+  if(a==='copy'){copyText(L.map(function(m){return m.t;}).join('\n'));clearSel();return;}
+  if(a==='save'){L.forEach(function(m){if(!S.saved[m.id])S.saved[m.id]={id:m.id,u:m.u,name:nameOf(m.u),t:m.t,at:m.at,src:ctx==='post'?'Post':'Chat'};});persist();toast('Saved');clearSel();return;}
+  if(a==='del'){
+    var ids=L.map(function(m){return m.id;});
+    if(ctx==='post')posts=posts.filter(function(p){return ids.indexOf(p.id)<0;});
+    else{var c=chats.filter(function(c){return c.id===openChatId;})[0];if(c)c.list=c.list.filter(function(m){return ids.indexOf(m.id)<0;});}
+    ids.forEach(function(i){delete S.saved[i];});persist();toast('Deleted');clearSel();return;
+  }
+  if(a==='block'){
+    var us=[];L.forEach(function(m){if(us.indexOf(m.u)<0)us.push(m.u);});
+    us.forEach(function(u){if(!isBlocked(u))S.blocked.push(u);});persist();
+    toast(us.length===1?nameOf(us[0])+' blocked':us.length+' users blocked',function(){us.forEach(function(u){S.blocked=S.blocked.filter(function(x){return x!==u;});});persist();redrawActive();});
+    clearSel();
+  }
+});
+
+/* ---------- tabs ---------- */
+var TABS=[['post','Post'],['chat','Chat'],['store','Store'],['saved','Saved']];
+var tab='post',openChatId=null,q={chat:'',store:'',saved:''};
+function drawTabs(){$('tabs').innerHTML=TABS.map(function(t){return '<button type="button" class="tab-btn'+(tab===t[0]?' active':'')+'" data-t="'+t[0]+'">'+t[1]+'</button>';}).join('');}
+$('tabs').addEventListener('click',function(e){var b=e.target.closest('[data-t]');if(b)go(b.getAttribute('data-t'));});
+function go(t){if(t!==tab&&sel.ctx==='post')sel={ctx:null,ids:{}};tab=t;drawSel();drawTabs();show();}
+function redrawActive(){if(openChatId)drawChat(false);else show(true);}
+function show(keep){
+  var m=$('main'),pc=$('postCompose');
+  pc.hidden=tab!=='post';
+  ({post:vPost,chat:vChat,store:vStore,saved:vSaved})[tab](m,keep);
+}
+
+/* ---------- Post ---------- */
+function vPost(m,keep){
+  var L=posts.filter(function(p){return !isBlocked(p.u);});
+  var y=window.scrollY;
+  m.innerHTML=(L.length?'<div class="msgs" id="pl">'+listHTML(L,true)+'</div>':'<div class="empty">No posts yet.<br>Write the first post below.</div>')+'<div class="compose-spacer"></div>';
+  var pl=$('pl');if(pl)bindMsgs(pl,'post');
+  if(keep)window.scrollTo(0,y);else window.scrollTo(0,document.body.scrollHeight);
+}
+$('postIn').addEventListener('input',function(){$('postSend').disabled=!$('postIn').value.trim();});
+$('postForm').addEventListener('submit',function(e){
+  e.preventDefault();var v=$('postIn').value.trim();if(!v)return;
+  posts.push({id:'p'+Date.now(),u:'me',t:v,at:new Date().toISOString()});
+  $('postIn').value='';$('postSend').disabled=true;vPost($('main'),false);
+});
+
+/* ---------- Chat list ---------- */
+function vChat(m){
+  var s=q.chat.trim().toLowerCase();
+  var L=chats.filter(function(c){return !isBlocked(c.u)&&c.list.length&&(!s||nameOf(c.u).toLowerCase().indexOf(s)>=0||c.list[c.list.length-1].t.toLowerCase().indexOf(s)>=0);});
+  L.sort(function(a,b){return new Date(b.list[b.list.length-1].at)-new Date(a.list[a.list.length-1].at);});
+  m.innerHTML=searchBox('qc','Search chats',q.chat)+'<div id="cl">'+(L.length?L.map(function(c){var l=c.list[c.list.length-1];
+    return '<button type="button" class="li" data-c="'+c.id+'">'+av(c.u)+'<div class="tx"><div class="l1"><span class="nm">'+esc(nameOf(c.u))+'</span><span class="tm">'+listTime(l.at)+'</span></div><div class="l2">'+(l.u==='me'?'You: ':'')+esc(l.t)+'</div></div></button>';}).join(''):'<div class="empty">'+(s?'Koi chat nahi mili.':'Abhi koi chat nahi.<br>Store tab se kisi se baat shuru karein.')+'</div>')+'</div>';
+  var i=$('qc');i.oninput=function(){q.chat=i.value;var p=i.selectionStart;vChat(m);var n=$('qc');n.focus();n.setSelectionRange(p,p);};
+  $('cl').onclick=function(e){var b=e.target.closest('[data-c]');if(b)openChat(b.getAttribute('data-c'));};
+}
+function openChat(id){
+  openChatId=id;sel={ctx:null,ids:{}};drawSel();
+  $('chat').hidden=false;document.body.classList.add('noscroll');
+  try{history.pushState({chat:1},'');}catch(e){}
+  drawChat(true);
+}
+function drawChat(scroll){
+  var c=chats.filter(function(x){return x.id===openChatId;})[0];if(!c)return;
+  $('chatName').textContent=nameOf(c.u);$('chatSub').textContent=stores.some(function(s){return s.u===c.u;})?'Store owner':'Community member';
+  $('chatAv').outerHTML=av(c.u,'sm').replace('class="av sm"','class="av sm" id="chatAv"');
+  var body=$('chatBody'),near=scroll||body.scrollHeight-body.scrollTop-body.clientHeight<120;
+  $('chatMsgs').innerHTML=c.list.length?listHTML(c.list,false):'<div class="empty">No messages yet.<br>Send the first message.</div>';
+  bindMsgs($('chatMsgs'),'chat');
+  if(near)body.scrollTop=body.scrollHeight;
+}
+function closeChat(){
+  if(!openChatId)return;
+  if(sel.ctx==='chat'){sel={ctx:null,ids:{}};drawSel();}
+  openChatId=null;$('chat').hidden=true;document.body.classList.remove('noscroll');show(true);
+}
+$('chatBack').onclick=function(){if(history.state&&history.state.chat)history.back();else closeChat();};
+window.addEventListener('popstate',function(){if(openChatId)closeChat();});
+$('chatIn').addEventListener('input',function(){$('chatSend').disabled=!$('chatIn').value.trim();});
+$('chatForm').addEventListener('submit',function(e){
+  e.preventDefault();var v=$('chatIn').value.trim();if(!v)return;
+  var c=chats.filter(function(x){return x.id===openChatId;})[0];if(!c)return;
+  c.list.push({id:c.id+'m'+Date.now(),u:'me',t:v,at:new Date().toISOString()});
+  $('chatIn').value='';$('chatSend').disabled=true;drawChat(true);
+});
+function startChatWith(u){
+  var c=chats.filter(function(x){return x.u===u;})[0];
+  if(!c){c={id:'c'+Date.now(),u:u,msgs:[],list:[]};chats.push(c);}
+  openChat(c.id);
+}
+
+/* ---------- Store ---------- */
+function vStore(m){
+  var s=q.store.trim().toLowerCase();
+  var L=stores.filter(function(x){return !isBlocked(x.u)&&(!s||x.name.toLowerCase().indexOf(s)>=0);});
+  m.innerHTML=searchBox('qs','Search stores',q.store)+'<div class="stores" id="sl">'+(L.length?L.map(function(x){
+    return '<article class="store-card"><div class="store-head">'+av(x.u,'sq')+'<div style="min-width:0"><div class="store-name">'+esc(x.name)+'</div><div class="store-meta">'+x.n+' products</div></div></div>'+
+     '<ul class="prods">'+x.p.slice(0,5).map(function(p){return '<li><span class="pi">'+ic('package')+'</span><span class="pn">'+esc(p[0])+'</span><span class="pp">'+esc(p[1])+'</span></li>';}).join('')+'</ul>'+
+     '<div class="store-acts"><button type="button" class="btn-pri" data-a="open" data-u="'+x.u+'">'+ic('store')+'Open store</button><button type="button" class="btn-soft" data-a="chat" data-u="'+x.u+'">'+ic('message-circle')+'Chat</button></div></article>';}).join(''):'<div class="empty">Koi store nahi mila.</div>')+'</div>';
+  var i=$('qs');i.oninput=function(){q.store=i.value;var p=i.selectionStart;vStore(m);var n=$('qs');n.focus();n.setSelectionRange(p,p);};
+  $('sl').onclick=function(e){var b=e.target.closest('[data-a]');if(!b)return;var u=b.getAttribute('data-u');
+    if(b.getAttribute('data-a')==='chat')startChatWith(u);else{var x=stores.filter(function(z){return z.u===u;})[0];if(x&&x.slug)window.open('shop.html?s='+encodeURIComponent(x.slug),'_blank');else toast('Store link not available');}};
+}
+
+/* ---------- Saved ---------- */
+function vSaved(m){
+  var s=q.saved.trim().toLowerCase();
+  var L=Object.keys(S.saved).map(function(k){return S.saved[k];}).filter(function(x){return !s||x.t.toLowerCase().indexOf(s)>=0||String(x.name).toLowerCase().indexOf(s)>=0;});
+  L.sort(function(a,b){return new Date(b.at)-new Date(a.at);});
+  m.innerHTML=searchBox('qv','Search saved',q.saved)+'<div id="vl">'+(L.length?L.map(function(x){
+    return '<div class="saved-item" data-id="'+x.id+'"><div class="h">'+avObj(x)+'<b>'+esc(x.name)+'</b><span class="chip-src">'+esc(x.src)+'</span><small>'+listTime(x.at)+'</small></div><p>'+esc(x.t)+'</p><div class="acts"><button type="button" data-a="copy" aria-label="Copy">'+ic('copy')+'</button><button type="button" data-a="del" aria-label="Remove from Saved">'+ic('trash-2')+'</button></div></div>';}).join(''):'<div class="empty">'+(s?'Kuch nahi mila.':'Abhi kuch save nahi.<br>Kisi post ya message ka bookmark icon dabayein.')+'</div>')+'</div>';
+  var i=$('qv');i.oninput=function(){q.saved=i.value;var p=i.selectionStart;vSaved(m);var n=$('qv');n.focus();n.setSelectionRange(p,p);};
+  $('vl').onclick=function(e){var b=e.target.closest('[data-a]');if(!b)return;var id=b.closest('.saved-item').getAttribute('data-id'),x=S.saved[id];if(!x)return;
+    if(b.getAttribute('data-a')==='copy')copyText(x.t);else{delete S.saved[id];persist();toast('Removed from Saved');vSaved(m);}};
+}
+function avObj(x){return av(x.u,'sm');}
+
+/* ---------- settings (small, own theme) ---------- */
+var ST=['root'];
+function row(ic_,t,d,go,val){return '<button type="button" class="set-row" data-go="'+go+'"><span class="set-ic">'+ic(ic_,20)+'</span><span class="set-tx"><div class="set-t">'+t+'</div>'+(d?'<div class="set-d">'+d+'</div>':'')+'</span>'+(val?'<span class="set-val">'+val+'</span>':'')+'</button>';}
+var PG={root:'Settings',prof:'Profile & photo',appr:'Appearance',blk:'Blocked users'};
+function drawSettings(){
+  var pg=ST[ST.length-1],bl=S.blocked,h='<button type="button" class="back-btn" data-back="1">'+ic('arrow-left',16)+' '+(ST.length>1?'Back':'Home')+'</button><h2 class="set-h">'+ic('settings',22)+' '+PG[pg]+'</h2>';
+  if(pg==='root'){
+    h+='<button type="button" class="set-prof" data-go="prof">'+av('me','lg')+'<div><div class="set-pn">'+esc(S.me.name||'You')+'</div><div class="set-ps">Community profile</div></div></button>'+
+    '<div class="set-sec">General</div><div class="set-list">'+row('user','Profile & photo','Your name and picture','prof')+row('sun','Appearance','Light, dark or automatic','appr',esc(S.mode.charAt(0).toUpperCase()+S.mode.slice(1)))+row('ban','Blocked users','People whose posts you do not see','blk',bl.length?String(bl.length):'')+'</div>'+
+    '<div class="set-sec">My Khata</div><div class="set-list"><a class="set-row" href="index.html" style="text-decoration:none;color:inherit"><span class="set-ic">'+ic('arrow-left',20)+'</span><span class="set-tx"><div class="set-t">Back to My Khata</div><div class="set-d">Open your ledger</div></span></a></div>';
+  }else if(pg==='prof'){
+    h+='<div class="set-blk"><div class="prof"><div id="pv">'+av('me','lg')+'</div><div class="fields"><input type="text" id="sName" maxlength="40" placeholder="Your name" value="'+esc(S.me.name)+'" aria-label="Your name"><input type="url" id="sDp" placeholder="Picture link" value="'+esc(S.me.dp)+'" aria-label="Picture link"></div></div><div class="save-row"><button type="button" id="sSave">Save</button></div></div>';
+  }else if(pg==='appr'){
+    h+='<div class="set-blk"><div class="set-t">Mode</div><div class="seg">'+[['light','sun','Light'],['dark','moon','Dark'],['auto','smartphone','Auto']].map(function(x){return '<button type="button" data-m="'+x[0]+'" class="'+(S.mode===x[0]?'on':'')+'">'+ic(x[1],16)+x[2]+'</button>';}).join('')+'</div></div>';
+  }else{
+    h+='<div class="set-blk">'+(bl.length?bl.map(function(u){return '<div class="blk">'+av(u,'sm')+'<b>'+esc(nameOf(u))+'</b><button type="button" data-u="'+u+'">Unblock</button></div>';}).join(''):'<p class="note">No blocked users. Select a post and tap the block icon to hide posts from that person.</p>')+'</div>';
+  }
+  $('sheet').innerHTML=h;
+}
+function openSettings(){ST=['root'];drawSettings();$('ov').classList.add('on');}
+function closeSettings(){$('ov').classList.remove('on');}
+$('setBtn').onclick=openSettings;
+$('ov').addEventListener('click',function(e){
+  var bk=e.target.closest('[data-back]');if(bk){if(ST.length>1){ST.pop();drawSettings();}else closeSettings();return;}
+  var gg=e.target.closest('[data-go]');if(gg){ST.push(gg.getAttribute('data-go'));drawSettings();$('ov').scrollTop=0;return;}
+  var b=e.target.closest('[data-m]');if(b){S.mode=b.getAttribute('data-m');persist();applyTheme();drawSettings();return;}
+    b=e.target.closest('[data-u]');if(b){var u=b.getAttribute('data-u');S.blocked=S.blocked.filter(function(x){return x!==u;});persist();toast(nameOf(u)+' unblocked');drawSettings();redrawActive();return;}
+  if(e.target.id==='sSave'){S.me.name=($('sName').value.trim()||'You');S.me.dp=$('sDp').value.trim();persist();toast('Profile saved');drawSettings();redrawActive();}
+});
+$('ov').addEventListener('input',function(e){if(e.target.id==='sDp'||e.target.id==='sName'){var o=S.me.dp,n=S.me.name;S.me.dp=$('sDp').value.trim();S.me.name=$('sName').value.trim()||'You';$('pv').innerHTML=av('me','lg');S.me.dp=o;S.me.name=n;}});
+document.addEventListener('keydown',function(e){if(e.key!=='Escape')return;if(selCount())clearSel();else if($('ov').classList.contains('on'))closeSettings();else if(openChatId)$('chatBack').click();});
+
+/* ---------- start ---------- */
+$('setBtn').innerHTML=ic('settings');$('chatBack').innerHTML=ic('arrow-left');$('postSend').innerHTML=ic('send');$('chatSend').innerHTML=ic('send');
+applyTheme();drawTabs();show();
+if(matchMedia)try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(S.mode==='auto')applyTheme();});}catch(e){}
+})();
+</script>
+</body>
+</html>
