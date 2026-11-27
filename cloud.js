@@ -67,21 +67,21 @@ ${canSkip ? `<button id="g-skip" style="position:absolute;top:18px;right:18px;ba
       const $ = id => d.querySelector('#' + id), msg = (t, ok) => { $('g-m').style.color = ok ? '#111111' : '#111111'; $('g-m').textContent = t; if (t && !ok && $('g-m').animate) $('g-m').animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-7px)' }, { transform: 'translateX(7px)' }, { transform: 'translateX(0)' }], { duration: 280 }); };
       // Username only -> append @gmail.com; a full email (contains @) is used as typed
       const getEmail = () => {
-        const v = $('g-e').value.trim().toLowerCase();
+        const v = $('g-e').value.trim().toLowerCase().replace(/[^a-z0-9._-]/g, '');
         if (!v) return '';
-        return v.includes('@') ? v : v + '@gmail.com';
+        return v + '@khata.app';   // username -> hidden email (koi mail nahi jati)
       };
       function paint() {
         $('g-sub').textContent = mode === 'in' ? 'Login your account' : 'Create a new account';
         $('g-go').textContent = mode === 'in' ? 'Login' : 'Create';
         $('g-sw').textContent = mode === 'in' ? 'Create' : 'Login';
-        $('g-fp').hidden = mode !== 'in';
+        $('g-fp').hidden = true;   // username login mein email nahi, isliye reset link nahi
         $('g-p').autocomplete = mode === 'in' ? 'current-password' : 'new-password';
       }
       paint(); $('g-e').value = ''; $('g-p').value = '';
       const km = ls.getItem('kh_msg'); if (km) { ls.removeItem('kh_msg'); msg(km, true); }
       // Hide the @gmail.com suffix once the user types a full email address
-      $('g-e').oninput = () => { $('g-dom').style.display = $('g-e').value.includes('@') ? 'none' : ''; };
+      $('g-e').oninput = () => { $('g-e').value = $('g-e').value.toLowerCase().replace(/[^a-z0-9._-]/g, ''); };
       // Keyboard: Enter = next field / login, Up/Down arrows move between fields
       const order = ['g-skip', 'g-e', 'g-p', 'g-go', 'g-sw'].map($).filter(Boolean);
       d.addEventListener('keydown', ev => {
@@ -100,12 +100,12 @@ ${canSkip ? `<button id="g-skip" style="position:absolute;top:18px;right:18px;ba
       };
       $('g-go').onclick = async () => {
         const e = getEmail(), pw = $('g-p').value;
-        if (!e || pw.length < 6) return msg('Please enter your email and a password of at least 6 characters');
+        if (!e || pw.length < 6) return msg('Username likho aur password kam az kam 6 characters ka rakho (username mein sirf a-z, 0-9, . _ -)');
         $('g-go').disabled = true; msg('Please wait...', true);
         const r = mode === 'in' ? await sb.auth.signInWithPassword({ email: e, password: pw }) : await sb.auth.signUp({ email: e, password: pw });
         $('g-go').disabled = false;
         if (r.error) return msg(r.error.message);
-        if (!r.data.session) return msg('A confirmation link has been sent to your email. Please confirm it, then log in.', true);
+        if (!r.data.session) return msg('Account ban gaya. Ab Login dabao. (Agar login na ho to Supabase mein Confirm email band karo)', true);
         try { pendingPwh = await sha('khata-pw:' + r.data.session.user.id + ':' + pw); } catch (x) {}
         ls.removeItem(K('guest'));
         if (mode === 'up' || ls.getItem(K('owner')) !== r.data.session.user.id) dropLock();   // new / different account: no old app password
